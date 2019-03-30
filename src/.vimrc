@@ -16,6 +16,15 @@
 """ Use the full capabilities of vim without compatibility with vi.
 set nocompatible      " Turn arrows in the mode of INSERT.
 
+nnoremap <silent> <ESC>OA <UP>
+nnoremap <silent> <ESC>OB <DOWN>
+nnoremap <silent> <ESC>OC <RIGHT>
+nnoremap <silent> <ESC>OD <LEFT>
+inoremap <silent> <ESC>OA <UP>
+inoremap <silent> <ESC>OB <DOWN>
+inoremap <silent> <ESC>OC <RIGHT>
+inoremap <silent> <ESC>OD <LEFT>
+
 """ Disable beeping (aka 'bell') and window flashing, it is work in terminal
 """ and GUI Vim.
 set noerrorbells visualbell t_vb=
