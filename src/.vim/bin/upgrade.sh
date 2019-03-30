@@ -2,6 +2,24 @@
 # VALSORYM/VIM-RC UPGRADE
 # Author: valsorym <i@valsorym.com>
 
+# Go settings.
+PROFILE="$HOME/.profile"
+if [ ! -s "$PROFILE" ]
+then
+  touch "$PROFILE"
+fi
+
+exists=`cat "$PROFILE" | grep GOPATH`
+if [ -z "$exists" ]
+then
+  echo "" >> "$PROFILE"
+  echo "export GOPATH=\$HOME/go" >> "$PROFILE"
+  echo "export PATH=\$PATH:\$GOROOT/bin:\$GOPATH/bin" >> "$PROFILE"
+fi
+
+gocode close
+go get -u github.com/nsf/gocode
+
 # Merge specific files: colors syntax keymap compiler ftdetect ftplugin indent.
 for dir in `find $HOME/.vim/bundle -type d`
 do
@@ -18,16 +36,5 @@ done
 # Install and setting plugins.
 vim +PluginInstall +qall
 vim +GoInstallBinaries +qall
-
-# Go settings.
-gocode close
-go get -u github.com/nsf/gocode
-exists=`cat $HOME/.bashrc | grep GOPATH`
-if [ -z exists ]
-then
-  echo "" >> $HOME/.bashrc
-  echo "export GOPATH=$HOME/go" >> $HOME/.bashrc
-  echo "export PATH=$PATH:$GOROOT/bin:$GOPATH/bin" >> $HOME/.bashrc
-fi
 
 exit 0

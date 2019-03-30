@@ -12,6 +12,12 @@
 
 """ MAIN
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" INTERFACE
+"""
+set cmdheight=2
+set completeopt+=menuone
+set completeopt-=preview
+
 """ INCOMPATIBILITY WITH VI
 """ Use the full capabilities of vim without compatibility with vi.
 set nocompatible      " Turn arrows in the mode of INSERT.
@@ -354,6 +360,7 @@ let g:NERDTreeIgnore=[
 imap <C-b> <Esc>:Bookmark<Space>
 nmap <C-b> :Bookmark<Space>
 
+""" Toggle NERDTree.
 function! NERDTree_IsOpen()
     """ Return True if NERDTree is open.
     return exists('t:NERDTreeBufName') && (bufwinnr(t:NERDTreeBufName) != -1)
@@ -373,7 +380,6 @@ function! NERDTree_Open()
     endif
 endfunction
 
-""" Keyboard shortcuts.
 " nmap <silent> <F9> :NERDTreeToggle<CR>
 nmap <silent> <F9> :call NERDTree_Open()<CR>
 
@@ -576,82 +582,61 @@ autocmd QuickFixCmdPost    l* nested lwindow
 
 """ NOCOMPLATE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" URL:
-"     https://github.com/Shougo/neocomplete.vim
-" Settings:
-"    Disable AutoComplPop;
-"    Use neocomplete;
-"    Use smartcase;
-"    Set minimum syntax keyword length.
+""" Next generation completion framework after neocomplcache.
+""" URL:
+"""     https://github.com/Shougo/neocomplete.vim
+""" Settings:
+"""    Disable AutoComplPop;
+"""    Use neocomplete;
+"""    Use smartcase;
+"""    Set minimum syntax keyword length.
 let g:acp_enableAtStartup=0
 let g:neocomplete#enable_at_startup=1
 let g:neocomplete#enable_smart_case=1
 let g:neocomplete#sources#syntax#min_keyword_length=3
 
-"" " Define dictionary.
-"" let g:neocomplete#sources#dictionary#dictionaries = {
-""     \ 'default' : '',
-""     \ 'vimshell' : $HOME.'/.vimshell_hist',
-""     \ 'scheme' : $HOME.'/.gosh_completions'
-""         \ }
+""" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+    \ }
 
-" Define keyword.
+""" Define keyword.
 if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns={}
 endif
 let g:neocomplete#keyword_patterns['default']='\h\w*'
 
-" Plugin key-mappings.
-inoremap <expr><C-g> neocomplete#undo_completion()
-inoremap <expr><C-l> neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
+""" Recommended key-mappings.
+""" <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
   return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
   " For no inserting <CR> key.
   "return pumvisible() ? "\<C-y>" : "\<CR>"
 endfunction
-" <TAB>: completion.
+
+""" <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-""" " <C-h>, <BS>: close popup and delete backword char.
-""" inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-""" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select=1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select=1
-"let g:neocomplete#disable_auto_complete=1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
+""" Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType go setlocal omnifunc=gocomplete#Complete
 
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns={}
+if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
 endif
-"let g:neocomplete#sources#omni#input_patterns.php='[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c='[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp='[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl='\h\w*->\h\w*\|\h\w*::'
+let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.'
 
 
 """ VIM-GO
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" Go development plugin for Vim.
 """ URLS:
 """     https://github.com/fatih/vim-go
 let g:go_fmt_command="goimports"
