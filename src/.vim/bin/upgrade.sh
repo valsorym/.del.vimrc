@@ -15,9 +15,19 @@ do
     esac
 done
 
-# Install vim-go.
-# URL: https://github.com/fatih/vim-go
+# Install and setting plugins.
 vim +PluginInstall +qall
 vim +GoInstallBinaries +qall
+
+# Go settings.
+gocode close
+go get -u github.com/nsf/gocode
+exists=`cat $HOME/.bashrc | grep GOPATH`
+if [ -z exists ]
+then
+  echo "" >> $HOME/.bashrc
+  echo "export GOPATH=$HOME/go" >> $HOME/.bashrc
+  echo "export PATH=$PATH:$GOROOT/bin:$GOPATH/bin" >> $HOME/.bashrc
+fi
 
 exit 0

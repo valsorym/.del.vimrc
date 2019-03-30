@@ -501,10 +501,10 @@ nmap <S-q> :call ReSwap()<CR>
 """     https://github.com/valsorym/vim-clear-debris
 """
 """ Key mapping.
-command -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
-command -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
-imap <C-x> <Esc>:TrimSpaces<CR>
-nmap <C-x> :TrimSpaces<CR>
+"command -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
+"command -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
+"imap <C-x> <Esc>:TrimSpaces<CR>
+"nmap <C-x> :TrimSpaces<CR>
 
 
 """ MOVE LINES
@@ -574,20 +574,96 @@ autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
 
+""" NOCOMPLATE
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" URL:
+"     https://github.com/Shougo/neocomplete.vim
+" Settings:
+"    Disable AutoComplPop;
+"    Use neocomplete;
+"    Use smartcase;
+"    Set minimum syntax keyword length.
+let g:acp_enableAtStartup=0
+let g:neocomplete#enable_at_startup=1
+let g:neocomplete#enable_smart_case=1
+let g:neocomplete#sources#syntax#min_keyword_length=3
+
+"" " Define dictionary.
+"" let g:neocomplete#sources#dictionary#dictionaries = {
+""     \ 'default' : '',
+""     \ 'vimshell' : $HOME.'/.vimshell_hist',
+""     \ 'scheme' : $HOME.'/.gosh_completions'
+""         \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns={}
+endif
+let g:neocomplete#keyword_patterns['default']='\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g> neocomplete#undo_completion()
+inoremap <expr><C-l> neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select=1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select=1
+"let g:neocomplete#disable_auto_complete=1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns={}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php='[^. \t]->\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c='[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp='[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl='\h\w*->\h\w*\|\h\w*::'
+
+
 """ VIM-GO
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ URLS:
 """     https://github.com/fatih/vim-go
-let g:go_fmt_command = "goimports"
-let g:go_autodetect_gopath = 1
-let g:go_list_type = "quickfix"
+let g:go_fmt_command="goimports"
+let g:go_autodetect_gopath=1
+let g:go_list_type="quickfix"
 
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_generate_tags = 1
+let g:go_highlight_types=1
+let g:go_highlight_fields=1
+let g:go_highlight_functions=1
+let g:go_highlight_function_calls=1
+let g:go_highlight_extra_types=1
+let g:go_highlight_generate_tags=1
 
 " Open :GoDeclsDir with ctrl-g
 nmap <C-g> :GoDeclsDir<cr>
@@ -600,9 +676,9 @@ augroup go
   " :GoBuild and :GoTestCompile
   autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
   " :GoTest
-  autocmd FileType go nmap <leader>t  <Plug>(go-test)
+  autocmd FileType go nmap <leader>t <Plug>(go-test)
   " :GoRun
-  autocmd FileType go nmap <leader>r  <Plug>(go-run)
+  autocmd FileType go nmap <leader>r <Plug>(go-run)
   " :GoDoc
   autocmd FileType go nmap <Leader>d <Plug>(go-doc)
   " :GoCoverageToggle
@@ -633,6 +709,10 @@ function! s:build_go_files()
   endif
 endfunction
 
+let g:neocomplete#force_overwrite_completefunc=1
+let g:neocomplete#enable_smart_case=1
+let g:neocomplete#auto_completion_start_length=3
+let g:neocomplete#sources#syntax#min_keyword_length=3
 
 """ VUNDLE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -663,6 +743,7 @@ Plugin 'valsorym/vim-move' " or original: 'matze/vim-move'
 Plugin 'valsorym/vim-json' " or original: 'elzr/vim-json'
 Plugin 'valsorym/vim-multiple-cursors' " or original: 'terryma/vim-multiple-cursors'
 Plugin 'valsorym/vim-tagbar' " or original: 'majutsushi/tagbar'
+Plugin 'valsorym/vim-neocomplete' " or original 'Shougo/neocomplete.vim'
 Plugin 'valsorym/vim-go' " or original: 'fatih/vim-go'
 
 """ ... custom plugins ...
