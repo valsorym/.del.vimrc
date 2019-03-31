@@ -36,5 +36,7 @@ done
 # Install and setting plugins.
 vim +PluginInstall +qall
 vim +GoInstallBinaries +qall
+vim +GoUpdateBinaries +qall
+echo "Open vim and run :GoUpdateBinaries"
 
 exit 0
