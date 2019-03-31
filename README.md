@@ -11,7 +11,7 @@ Required
 
 Version: 8.0 +
 
-Only for UNIX-like platform (Linux, FreeBSD, MacOS, etc.). You need to install: `git`, `curl`, `ctags`. 
+Only for UNIX-like platform (Linux, FreeBSD, MacOS, etc.). You need to install: `git`, `curl`, `ctags`.
 
 
 Packages
@@ -79,18 +79,29 @@ Keyboard Shortcuts
 ## Main.
 
 - `F2` - save file;
-- `F8` - encoding menu;
+- `F8` - show encoding menu;
 - `F10` - open/close TagBar;
 - `F12` - show/hide row numbers line;
 - `C-o` - open file;
-- `C-x` - remove trailing blanks;
 - `C-w`, `<-` or `->` - choose window;
 - `C-u` - undo (don't use just the `u` for undo);
 - `C-r` - redo;
-- `S-q` - reconnect the swap file - it helps when working with files through SSHFS, after crash;
-- `C-i` - color highlight toggle.
+- `Leader`,`q` - reconnect the swap file - it helps when working with files through SSHFS, after crash;
+- `Leader`,`i` - color highlight toggle.
+- `Leader`,`x` - remove trailing blanks;
 
-... the other buttons correspond to the parameters by default.
+P.s. The leader button set as '.' (dot).
+P.p.s. The other buttons correspond to the parameters by default.
+
+## GO-files.
+
+- `Leader`,`r` - go run;
+- `Leader`,`b` - go build;
+- `Leader`,`t` - go test;
+- `Leader`,`i` - show information about methods;
+- `Leader`,`d` - show method declaration in the new tab;
+
+P.s. The leader button set as '.' (dot).
 
 ## Tabs.
 
@@ -99,16 +110,14 @@ Keyboard Shortcuts
 - `C-n` - open new tab (or - `F7`);
 - `C-h` - move tab to first position;
 - `C-j` - move tab to left;
-- `C-k` - move tab to right; 
+- `C-k` - move tab to right;
 - `C-l` - move tab to last position;
 - `C-z` - open first tab;
-- `C-PgUp` or `F5` - tab prev;
-- `C-PgDw` or `F6` - tab next;
+- `C-ArrowLeft` or `F5` - tab prev;
+- `C-ArrowRight` or `F6` - tab next;
 
 
 ## Copy & Paste system's clipboard.
-
-P.s. Install the `vim-gtk` package, and use `select-editor` to select the `vim-gtk` by default.
 
 - `C-Ins` - copy text selected in visual mode (only in `gvim` or `vim-gtk`);
 - `C-c`  - copy text selected in visual mode;
@@ -117,6 +126,7 @@ P.s. Install the `vim-gtk` package, and use `select-editor` to select the `vim-g
 - `C-v`, `v` or `S-v` + `C-Ins` - copy text to an external clipboard;
 - `S-a`, `i`, `S-r` or `r` + `S-Ins` - paste from an external clipboard.
 
+P.s. Install the `vim-gtk` package, and use `select-editor` to select the `vim-gtk` by default.
 
 ## Flexible editing.
 
@@ -159,9 +169,9 @@ Click `C-v` and move arrow for select block, and click:
 - `c` - to replace the contents of the block;
 - `d` - to delete the content of the block;
 - `S-i` - to move the cursor to the begin of the block (handy when you add spaces at the beginning of the line);
-- `S-a` - to move the cursor to the end of the block;
+- `S-a` - to move the cursor to the end of the block.
 
-... enter some text (the text will be written only in the one line), and click `Esc`.
+P.s. Enter some text (the text will be written only in the one line), and click `Esc`.
 
 
 ## NERDTree
@@ -199,7 +209,7 @@ So - open this files, we have tabs (it is style `0`):
 1. accounts.py | 2. accounts.py | 3. accounts.py
 ```
 
-It is problem, because we don't know which file open on tab 2! Now we've added a tab styles. 
+It is problem, because we don't know which file open on tab 2! Now we've added a tab styles.
 
 Set custom stule (for example - style 3):
 ```

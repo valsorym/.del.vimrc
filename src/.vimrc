@@ -12,12 +12,6 @@
 
 """ MAIN
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""" INTERFACE
-"""
-set cmdheight=2
-set completeopt+=menuone
-set completeopt-=preview
-
 """ INCOMPATIBILITY WITH VI
 """ Use the full capabilities of vim without compatibility with vi.
 set nocompatible      " Turn arrows in the mode of INSERT.
@@ -58,8 +52,8 @@ set ignorecase
 set smartcase
 
 """ Highlight searched words.
-""" TODO: Fix problem on MacOS when using the console version.
 if has("unix")
+    """ The console vim in MacOS has a problem with this solution.
     if system('uname -s') == "Linux\n"
         set hlsearch
         nnoremap <Esc> :noh<return><Esc>
@@ -130,7 +124,7 @@ autocmd FileType sh setlocal shiftwidth=2 tabstop=2
 """ GoLang: see VIM-GO PLUGIN section
 " autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
-""" When update the buffer need update syntax highlighting too. This is
+""" When updated the buffer need update syntax highlighting too. This is
 """ important when searching in large files.
 autocmd BufEnter * :syntax sync fromstart
 
@@ -145,6 +139,12 @@ set directory=/tmp//
 
 """ EDITOR OPTIONS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" COMMAND LINE
+""" Base settings.
+set cmdheight=2
+set completeopt+=menuone
+set completeopt-=preview
+
 """ LINE NUMBERING
 """ Show line numbers in the file.
 set number
@@ -223,7 +223,7 @@ highlight lCursor guifg=NONE guibg=Cyan
 
 " MAPLEADER
 " Set leader shortcut to a comma ',' (by default it's the backslash).
-let mapleader=","
+let mapleader="."
 
 """ EDIT
 """ Undo/Redo.
@@ -258,8 +258,8 @@ imap <C-v> <ESC> "+p
 """ FILES
 """ Open file.
 """ USAGE: Ctrl+O
-" imap <C-o> <Esc>:e<Space>
-" nmap <C-o> :e<Space>
+imap <C-o> <Esc>:e<Space>
+nmap <C-o> :e<Space>
 
 """ Save current tab.
 """ USAGE: F2
@@ -283,14 +283,16 @@ imap <F4> <Esc>:tabn<Space>
 nmap <F4> :tabn<Space>
 
 """ Prev tab.
-""" USAGE: F5 or Ctrl+PageUp
+""" USAGE: F5 or Ctrl+ArrowLeft
 imap <F5> <Esc>:tabprev<CR>
 nmap <F5> :tabprev<CR>
+map <C-Left> :tabprev<CR>
 
 """ Next tab.
-""" USAGE: F6 or Ctrl+PageDown
+""" USAGE: F6 or Ctrl+ArrowRight
 imap <F6> <Esc>:tabnext<CR>
 nmap <F6> :tabnext<CR>
+map <C-Right> :tabnext<CR>
 
 """ Create new tab.
 """ USAGE: F7 or Ctrl+n
@@ -353,7 +355,8 @@ let g:NERDTreeIgnore=[
     \ "\\.swp$",
     \ "\\.core$",
     \ "\\.o$",
-    \ "^_del\\."
+    \ "^_del\\.",
+    \ "^\\.del\\."
 \]
 
 """ Add bookmark.
@@ -452,8 +455,8 @@ let g:bufExplorerSortBy='fullpath'
 """ 4. Show only three first symbol from parent folder + filename.
 """ Show only three first symbol from parent folder + filename.
 set tabline=%!TabName(4)
-""" 
-""" """ Automatically move the tab to the last position.
+
+""" Automatically move the tab to the last position.
 if has('autocmd')
     " If open a lot of tabs and when the tab is editing - moved tab to last
     " position.
@@ -496,21 +499,22 @@ function ReSwap()
     execute ':echo "The swap file was changed!"'
 endfunction
 
-nmap <S-q> :call ReSwap()<CR>
+nmap <leader>q :call ReSwap()<CR>
 
 
-""" CLEARDEBRIS
+""" CLEAR DEBRIS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Remove trailing blanks.
-""" USAGE: Ctrl+x, a
+""" USAGE: <leader>x, a
 """ URLS:
-"""     https://github.com/valsorym/vim-clear-debris
+"""     https://github.com/valsorym/vim-clear
 """
 """ Key mapping.
-"command -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
-"command -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
+command -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
+command -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
 "imap <C-x> <Esc>:TrimSpaces<CR>
 "nmap <C-x> :TrimSpaces<CR>
+nmap <leader>x :TrimSpaces<CR>
 
 
 """ MOVE LINES
@@ -561,7 +565,7 @@ let g:multi_cursor_quit_key='<Esc>'
 """     https://github.com/valsorym/vim-colorizer
 """
 """ Key mapping.
-nmap <C-i> :ColorToggle<CR>
+nmap <leader>i :ColorToggle<CR>
 
 
 """ VIM-JSON
@@ -580,7 +584,7 @@ autocmd QuickFixCmdPost [^l]* nested cwindow
 autocmd QuickFixCmdPost    l* nested lwindow
 
 
-""" NOCOMPLATE
+""" NEOCOMPLETE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Next generation completion framework after neocomplcache.
 """ URL:
@@ -593,32 +597,31 @@ autocmd QuickFixCmdPost    l* nested lwindow
 let g:acp_enableAtStartup=0
 let g:neocomplete#enable_at_startup=1
 let g:neocomplete#enable_smart_case=1
+let g:neocomplete#force_overwrite_completefunc=1
+let g:neocomplete#auto_completion_start_length=3
 let g:neocomplete#sources#syntax#min_keyword_length=3
 
 """ Define dictionary.
 let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
+      \ 'default' : '',
+      \ 'vimshell' : $CACHE.'/vimshell/command-history',
+      \ 'python' : '~/.vim/dict/python.dict',
+      \ 'go' : '~/.vim/dict/go.dict',
+      \ }
 
-""" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns={}
-endif
-let g:neocomplete#keyword_patterns['default']='\h\w*'
+""" """ Define keyword.
+""" if !exists('g:neocomplete#keyword_patterns')
+"""     let g:neocomplete#keyword_patterns={}
+""" endif
+""" let g:neocomplete#keyword_patterns['default']='\h\w*'
 
-""" Recommended key-mappings.
-""" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-
-""" <TAB>: completion.
+""" Completion.
+""" Close popup and save indent use TAB ro CR.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent> <CR> <C-r>=<SID>neocomplete_cr_function()<CR>
+function! s:neocomplete_cr_function()
+    return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
 
 """ Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -629,7 +632,7 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType go setlocal omnifunc=gocomplete#Complete
 
 if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns = {}
+    let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.'
 
@@ -637,53 +640,38 @@ let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.'
 """ VIM-GO
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Go development plugin for Vim.
+""" USAGE: (only for .go files)
+"""     <leader>r - go run;
+"""     <leader>b - go build;
+"""     <leader>t - go test;
+"""     <leader>i - show information about methods;
+"""     <leader>d - show method declaration in the new tab;
 """ URLS:
 """     https://github.com/fatih/vim-go
 let g:go_fmt_command="goimports"
-let g:go_autodetect_gopath=1
 let g:go_list_type="quickfix"
-
+let g:go_autodetect_gopath=1
 let g:go_highlight_types=1
 let g:go_highlight_fields=1
 let g:go_highlight_functions=1
-let g:go_highlight_function_calls=1
 let g:go_highlight_extra_types=1
 let g:go_highlight_generate_tags=1
-
-" Open :GoDeclsDir with ctrl-g
-nmap <C-g> :GoDeclsDir<cr>
-imap <C-g> <esc>:<C-u>GoDeclsDir<cr>
+let g:go_highlight_function_calls=1
+let g:go_gocode_unimported_packages = 1
 
 augroup go
-  autocmd!
-  " Show by default 4 spaces for a tab
-  autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
-  " :GoBuild and :GoTestCompile
-  autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-  " :GoTest
-  autocmd FileType go nmap <leader>t <Plug>(go-test)
-  " :GoRun
-  autocmd FileType go nmap <leader>r <Plug>(go-run)
-  " :GoDoc
-  autocmd FileType go nmap <Leader>d <Plug>(go-doc)
-  " :GoCoverageToggle
-  autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
-  " :GoInfo
-  autocmd FileType go nmap <Leader>i <Plug>(go-info)
-  " :GoMetaLinter
-  autocmd FileType go nmap <Leader>l <Plug>(go-metalinter)
-  " :GoDef but opens in a vertical split
-  autocmd FileType go nmap <Leader>v <Plug>(go-def-vertical)
-  " :GoDef but opens in a horizontal split
-  autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
-  " :GoAlternate  commands :A, :AV, :AS and :AT
-  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-  autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+    autocmd!
+    " Customization .go files: show by default 4 spaces for a tab.
+    autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+
+    autocmd FileType go nmap <leader>r <Plug>(go-run)
+    autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+    autocmd FileType go nmap <leader>t <Plug>(go-test)
+    autocmd FileType go nmap <Leader>i <Plug>(go-info)
+    autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def-tab)
 augroup END
 
-" build_go_files is a custom function that builds or compiles the test file.
+" The build_go_files is a custom function that builds or compile the test file.
 " It calls :GoBuild if its a Go file, or :GoTestCompile if it's a test file
 function! s:build_go_files()
   let l:file = expand('%')
@@ -694,10 +682,6 @@ function! s:build_go_files()
   endif
 endfunction
 
-let g:neocomplete#force_overwrite_completefunc=1
-let g:neocomplete#enable_smart_case=1
-let g:neocomplete#auto_completion_start_length=3
-let g:neocomplete#sources#syntax#min_keyword_length=3
 
 """ VUNDLE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -705,7 +689,6 @@ let g:neocomplete#sources#syntax#min_keyword_length=3
 """ URLS:
 """     https://github.com/VundleVim/Vundle.vim
 """
-set nocompatible
 filetype off
 
 " Set the runtime path to include Vundle and initialize.
