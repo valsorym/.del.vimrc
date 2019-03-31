@@ -37,6 +37,9 @@ done
 vim +PluginInstall +qall
 vim +GoInstallBinaries +qall
 vim +GoUpdateBinaries +qall
-echo "Open vim and run :GoUpdateBinaries"
+
+cat ~/.profile | grep GOPATH
+echo "Change \$GOPATH in the ~/.profile, after"
+echo "open the vim and run :GoUpdateBinaries"
 
 exit 0
