@@ -104,7 +104,7 @@ For go-files are set additional settings:
 - `Leader`,`t` - go test;
 - `Leader`,`i` - show information about methods;
 - `Leader`,`d` - show method declaration in the new tab;
-- `Leader`,`r` - runt go fmt.
+- `Leader`,`f` - runt go fmt.
 
 P.s. The leader button set as `.` (dot).
 
