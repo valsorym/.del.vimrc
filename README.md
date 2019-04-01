@@ -1,17 +1,18 @@
 VIM CONFIGS
 ===========
 
-It is VIM configurations files for comfortable work of python/django web developers. This package allows to install and configure additional plug-ins and themes.
-
-To install additional packages need to install [vundle](https://github.com/VundleVim/Vundle.vim).
+It's VIM configurations files for developers comfortable work: Shell, Bash, C, C++, Go, Python (Django, Tornado template syntaxs), CSS/SCSS, HTML, JavaScript (JSON syntax), TypeScript.
 
 
 Required
 --------
 
-Version: 8.0 +
-
-Only for UNIX-like platform (Linux, FreeBSD, MacOS, etc.). You need to install: `git`, `curl`, `ctags`.
+Required parameters:
+ - OS UNIX-Like: Linux, FreeBSD, MacOS, etc.;
+ - vim (version: 8.0 +);
+ - git;
+ - curl;
+ - ctags;
 
 
 Packages
@@ -26,7 +27,8 @@ Configurations include the installation of the following packages:
 - [valsorym/vim-colorizer](https://github.com/valsorym/vim-colorizer) - it is fork of [chrisbra/Colorizer](https://github.com/chrisbra/Colorizer) a plugin to color colornames and codes;
 - [matze/vim-move](https://github.com/matze/vim-move) - plugin allows you to move the text up/down without the need to cut/paste;
 - [terryma/vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors) - plugin allows you to set several simultaneous cursor for text editing;
-- [majutsushi/tagbar](https://github.com/majutsushi/tagbar) - plugin that provides an easy way to browse the tags of the current file and get an overview of its structure.
+- [majutsushi/tagbar](https://github.com/majutsushi/tagbar) - plugin that provides an easy way to browse the tags of the current file and get an overview of its structure;
+- [fatih/vim-go](https://github.com/fatih/vim-go) - Go development plugin for Vim.
 
 
 Quick Start
@@ -35,9 +37,9 @@ Quick Start
 Installation of base configurations is quite simple:
 
 ```
-$ git clone git://github.com/valsorym/vim-djapy-configs /tmp/vim-djapy-configs
-$ cd /tmp/vim-djapy-configs
-$ make install
+$ git clone git://github.com/valsorym/vimrc /tmp/vimrc
+$ cd /tmp/vimrc
+$ make clear && make install
 ```
 
 
@@ -90,18 +92,21 @@ Keyboard Shortcuts
 - `Leader`,`i` - color highlight toggle.
 - `Leader`,`x` - remove trailing blanks;
 
-P.s. The leader button set as '.' (dot).
+P.s. The leader button set as `.` (dot).
 P.p.s. The other buttons correspond to the parameters by default.
 
 ## GO-files.
+
+For go-files are set additional settings:
 
 - `Leader`,`r` - go run;
 - `Leader`,`b` - go build;
 - `Leader`,`t` - go test;
 - `Leader`,`i` - show information about methods;
 - `Leader`,`d` - show method declaration in the new tab;
+- `Leader`,`r` - runt go fmt.
 
-P.s. The leader button set as '.' (dot).
+P.s. The leader button set as `.` (dot).
 
 ## Tabs.
 
