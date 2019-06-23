@@ -649,32 +649,32 @@ let g:neocomplete#force_omni_input_patterns.go = '[^.[:digit:] *\t]\.'
 """     <leader>f - run go fmt.
 """ URLS:
 """     https://github.com/fatih/vim-go
-let g:go_list_type="quickfix"
-let g:go_autodetect_gopath=1
-let g:go_highlight_types=1
-let g:go_highlight_fields=1
-let g:go_highlight_functions=1
-let g:go_highlight_extra_types=1
-let g:go_highlight_generate_tags=1
-let g:go_highlight_function_calls=1
-let g:go_gocode_unimported_packages = 1
-let g:go_doc_keywordprg_enabled = 0
-let g:go_fmt_command="goimports"
-let g:go_fmt_fail_silently=0
-let g:go_fmt_autosave=0 " 1 - for automatic formatting when saving
+"let g:go_list_type="quickfix"
+"let g:go_autodetect_gopath=1
+"let g:go_highlight_types=1
+"let g:go_highlight_fields=1
+"let g:go_highlight_functions=1
+"let g:go_highlight_extra_types=1
+"let g:go_highlight_generate_tags=1
+"let g:go_highlight_function_calls=1
+"let g:go_gocode_unimported_packages = 1
+"let g:go_doc_keywordprg_enabled = 0
+"let g:go_fmt_command="goimports"
+"let g:go_fmt_fail_silently=0
+"let g:go_fmt_autosave=0 " 1 - for automatic formatting when saving
 
-augroup go
-    autocmd!
-    " Customization .go files: show by default 4 spaces for a tab.
-    autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+"augroup go
+"    autocmd!
+"    " Customization .go files: show by default 4 spaces for a tab.
+"    autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
-    autocmd FileType go nmap <leader>r <Plug>(go-run)
-    autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-    autocmd FileType go nmap <leader>t <Plug>(go-test)
-    autocmd FileType go nmap <Leader>i <Plug>(go-info)
-    autocmd FileType go nmap <Leader>f <Esc>:GoFmt<CR>
-    autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def-tab)
-augroup END
+"    autocmd FileType go nmap <leader>r <Plug>(go-run)
+"    autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+"    autocmd FileType go nmap <leader>t <Plug>(go-test)
+"    autocmd FileType go nmap <Leader>i <Plug>(go-info)
+"    autocmd FileType go nmap <Leader>f <Esc>:GoFmt<CR>
+"    autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def-tab)
+"augroup END
 
 " The build_go_files is a custom function that builds or compile the test file.
 " It calls :GoBuild if its a Go file, or :GoTestCompile if it's a test file
