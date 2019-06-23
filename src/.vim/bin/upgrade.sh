@@ -3,22 +3,22 @@
 # Author: valsorym <i@valsorym.com>
 
 # Go settings.
-PROFILE="$HOME/.profile"
-if [ ! -s "$PROFILE" ]
-then
-  touch "$PROFILE"
-fi
+#PROFILE="$HOME/.profile"
+#if [ ! -s "$PROFILE" ]
+#then
+#  touch "$PROFILE"
+#fi
 
-exists=`cat "$PROFILE" | grep GOPATH`
-if [ -z "$exists" ]
-then
-  echo "" >> "$PROFILE"
-  echo "export GOPATH=\$HOME/go" >> "$PROFILE"
-  echo "export PATH=\$PATH:\$GOROOT/bin:\$GOPATH/bin" >> "$PROFILE"
-fi
+#exists=`cat "$PROFILE" | grep GOPATH`
+#if [ -z "$exists" ]
+#then
+#  echo "" >> "$PROFILE"
+#  echo "export GOPATH=\$HOME/go" >> "$PROFILE"
+#  echo "export PATH=\$PATH:\$GOROOT/bin:\$GOPATH/bin" >> "$PROFILE"
+#fi
 
-gocode close
-go get -u github.com/nsf/gocode
+#gocode close
+#go get -u github.com/nsf/gocode
 
 # Merge specific files: colors syntax keymap compiler ftdetect ftplugin indent.
 for dir in `find $HOME/.vim/bundle -type d`
@@ -35,11 +35,11 @@ done
 
 # Install and setting plugins.
 vim +PluginInstall +qall
-vim +GoInstallBinaries +qall
-vim +GoUpdateBinaries +qall
+#vim +GoInstallBinaries +qall
+#vim +GoUpdateBinaries +qall
 
-cat ~/.profile | grep GOPATH
-echo "Change \$GOPATH in the ~/.profile, after"
-echo "open the vim and run :GoUpdateBinaries"
+#cat ~/.profile | grep GOPATH
+#echo "Change \$GOPATH in the ~/.profile, after"
+#echo "open the vim and run :GoUpdateBinaries"
 
 exit 0
