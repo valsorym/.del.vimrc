@@ -717,7 +717,7 @@ Plugin 'valsorym/vim-json' " or original: 'elzr/vim-json'
 Plugin 'valsorym/vim-multiple-cursors' " or original: 'terryma/vim-multiple-cursors'
 Plugin 'valsorym/vim-tagbar' " or original: 'majutsushi/tagbar'
 Plugin 'valsorym/vim-neocomplete' " or original 'Shougo/neocomplete.vim'
-Plugin 'valsorym/vim-go' " or original: 'fatih/vim-go'
+""" Plugin 'valsorym/vim-go' " or original: 'fatih/vim-go'
 
 """ ... custom plugins ...
 """ >
