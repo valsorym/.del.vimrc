@@ -1,6 +1,6 @@
 " VIM CONFIGURATIONS
 " Author: valsorym <i@valsorym.com>
-" Date: 2012-12-12 - 2019-03-30
+" Date: 2012-12-12 - 2019-09-09
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -95,6 +95,7 @@ autocmd BufNewFile,BufRead *.less set filetype=less
 autocmd BufNewFile,BufRead *.html set filetype=htmldjango
 autocmd BufNewFile,BufRead *.tmpl set filetype=html.tornadotmpl
 autocmd BufNewFile,BufRead *.py set filetype=python
+autocmd BufNewFile,BufRead *.pyx set filetype=cython
 autocmd BufNewFile,BufRead *.css set filetype=css
 autocmd BufNewFile,BufRead *.scss set filetype=scss
 autocmd BufNewFile,BufRead *.po set filetype=po
@@ -512,8 +513,8 @@ nmap <leader>q :call ReSwap()<CR>
 """ Key mapping.
 command -bar -nargs=? ShowSpaces call ShowSpaces(<args>)
 command -bar -nargs=0 -range=% TrimSpaces <line1>,<line2>call TrimSpaces()
-"imap <C-x> <Esc>:TrimSpaces<CR>
-"nmap <C-x> :TrimSpaces<CR>
+imap <C-x> <Esc>:TrimSpaces<CR>
+nmap <C-x> :TrimSpaces<CR>
 nmap <leader>x :TrimSpaces<CR>
 
 
